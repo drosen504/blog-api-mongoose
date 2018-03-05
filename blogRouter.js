@@ -16,3 +16,5 @@ BlogPosts.create('How to Win Go Fish', 'The biggest mistake people make when pla
 router.get('/', (req, res) => {
   res.json(BlogPosts.get());
 });
+
+module.exports = router;
