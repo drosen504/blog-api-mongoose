@@ -20,9 +20,9 @@ describe('Blog Posts', function() {
     return closeServer();
   });
 
-  it('should list items on GET'), function() {
+  it('should list items on GET', function() {
     return chai.request(app)
-      .get('/shopping-list')
+      .get('/blog-posts')
       .then(function(res) {
         expect(res).to.have.status(200);
         expect(res).to.be.json;
@@ -32,9 +32,9 @@ describe('Blog Posts', function() {
         res.body.forEach(function(item) {
           expect(item).to.be.a('object');
           expect(item).to.include.keys(expectedKeys);
-        });  
+        });
       });
-  };
+  });
 
   
 });
