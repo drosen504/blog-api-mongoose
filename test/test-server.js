@@ -36,5 +36,17 @@ describe('Blog Posts', function() {
       });
   });
 
-  
+  it('should add an item on POST', function() {
+    const newPost = {title: 'Skydiving is bad', content: 'Dont ever skydive', author: 'by Mom'};
+    return chai.request(app)
+      .post('/blog-posts')
+      .send(newPost)
+      .then(function(res) {
+        expect(res).to.have.status(201);
+        expect(res).to.be.json;
+        expect(res.body).to.be.a('object');
+        expect(res.body).to.include.keys('id', 'title', 'content', 'author');
+        expect(res.body.id).to.not.equal(null);
+      });
+  });
 });
