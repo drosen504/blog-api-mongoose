@@ -49,4 +49,25 @@ describe('Blog Posts', function() {
         expect(res.body.id).to.not.equal(null);
       });
   });
+
+  it ('should update items on PUT', function() {
+    const updateData = {
+      title: 'Hee Haw Was a Good Show',
+      content: 'Just kidding, no it wasnt',
+      author: 'by Dad Jones'
+    };
+    return chai.request(app)
+      .get('/blog-posts')
+      .then(function(res) {
+        updateData.id = res.body[0].id;
+        return chai.request(app)
+          .put(`/blog-posts/${updateData.id}`)
+          .send(updateData);
+      })
+      .then(function(res) {
+        expect(res).to.have.status(204);
+        expect(res.body).to.be.a('object');
+      });
+  });
+
 });
