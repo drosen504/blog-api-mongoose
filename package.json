@@ -4,8 +4,8 @@
   "description": "blog-api drill",
   "main": "models.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "mocha --exit"
   },
   "author": "",
   "license": "MIT",
@@ -19,5 +19,9 @@
     "node",
     "hyperdev",
     "express"
-  ]
+  ],
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^4.0.1"
+  }
 }
