@@ -3,6 +3,7 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
+const morgan = require('morgan');
 
 mongoose.Promise = global.Promise;
 
@@ -10,18 +11,13 @@ const { PORT, DATABASE_URL } = require('./config');
 const { Post } = require('./models');
 
 const app = express();
+
 app.use(bodyParser.json());
+app.use(morgan('common'));
 
 app.get('/posts', (req, res) => {
-  const filters = {};
-  const queryableFields = ['cuisine', 'borough'];
-  queryableFields.forEach(field => {
-    if (req.query[field]) {
-      filters[field] = req.query[field];
-    }
-  });
   Post
-    .find(filters)
+    .find()
     .then(posts => res.json(
       posts.map(post => post.serialize())
     ))
@@ -44,7 +40,7 @@ app.get('/posts/:id', (req, res) => {
 
 app.post('/posts', (req, res) => {
 
-  const requiredFields = ['name', 'borough', 'cuisine'];
+  const requiredFields = ['title', 'content', 'author'];
   for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
     if (!(field in req.body)) {
@@ -56,11 +52,9 @@ app.post('/posts', (req, res) => {
 
   Post
     .create({
-      name: req.body.name,
-      borough: req.body.borough,
-      cuisine: req.body.cuisine,
-      grades: req.body.grades,
-      address: req.body.address
+      title: req.body.title,
+      content: req.body.content,
+      author: req.body.author
     })
     .then(post => res.status(201).json(post.serialize()))
     .catch(err => {
