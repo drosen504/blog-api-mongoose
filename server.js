@@ -74,7 +74,7 @@ app.put('/posts/:id', (req, res) => {
   }
 
   const toUpdate = {};
-  const updateableFields = ['name', 'borough', 'cuisine', 'address'];
+  const updateableFields = ['title', 'content', 'author'];
 
   updateableFields.forEach(field => {
     if (field in req.body) {
